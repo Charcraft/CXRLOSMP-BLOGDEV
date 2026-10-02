@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://charcraft.github.io',
-  base: '/CXRLOSMP-LANDING/',
+  base: '/CXRLOSMP-BLOGDEV/',
   output: 'static',
   trailingSlash: 'never',
   build: {
