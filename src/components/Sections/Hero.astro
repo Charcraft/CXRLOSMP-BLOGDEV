@@ -1,0 +1,71 @@
+---
+interface Props {
+  profile: any;
+}
+const { profile } = Astro.props;
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden" aria-labelledby="hero-title" style="scroll-margin-top: var(--header-h);">
+  <!-- Three.js Canvas -->
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+  
+  <!-- Scanlines & Vignette overlays -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center">
+      <p class="hero-sub font-display text-xs md:text-sm uppercase tracking-widest text-p5-red mb-4 opacity-0 animate-fade-slide-up">
+        Hola, soy {profile.name.split(' ')[1]} de Jesus
+      </p>
+      <h1 id="hero-title" class="hero-title font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl uppercase leading-tight tracking-wider text-gradient-fusion mb-6 opacity-0 animate-fade-slide-up-delay-1">
+        {profile.name}.<br>
+        <span class="text-gradient-fusion-reverse">{profile.tagline}</span>
+      </h1>
+      <p class="hero-desc text-fusion-text-muted text-base md:text-lg max-w-2xl mx-auto mb-10 opacity-0 animate-fade-slide-up-delay-2">
+        {profile.bio}
+      </p>
+      <a href="#projects" class="hero-cta btn-p5 inline-flex opacity-0 animate-fade-slide-up-delay-3">
+        <span>Ver mis proyectos</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+    <svg class="w-6 h-6 text-p5-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+
+  <!-- Three.js Initialization -->
+  <script type="module">
+    import { TokyoScene } from '../../lib/three/TokyoScene.js';
+    import { getDeviceTier } from '../../lib/responsive.js';
+
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+    if (canvas) {
+      const deviceTier = getDeviceTier();
+      const scene = new TokyoScene(canvas);
+      await scene.init(deviceTier);
+      scene.start();
+
+      // Scroll progress for distortion
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(() => {
+            const progress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            scene.setScrollProgress(Math.max(0, Math.min(1, progress)));
+            ticking = false;
+          });
+        }
+      });
+
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => scene.dispose());
+    }
+  </script>
+</section>

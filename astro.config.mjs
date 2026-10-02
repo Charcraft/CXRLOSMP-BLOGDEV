@@ -1,5 +1,18 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://charcraft.github.io',
+  base: '/CXRLOSMP-LANDING/',
+  output: 'static',
+  trailingSlash: 'never',
+  build: {
+    inlineStylesheets: 'auto',
+    assets: 'assets',
+  },
+  integrations: [mdx()],
+  markdown: {
+    shikiConfig: { theme: 'github-dark' },
+  },
+  prefetch: { prefetchAll: true },
+});

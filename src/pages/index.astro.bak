@@ -46,11 +46,14 @@ const projects = await getCollection('projects');
   <title>Carlos de Jesus Martinez Pineda | Ingeniería en Software</title>
 </head>
 <body>
+  <!-- Global overlays -->
   <div class="scanlines" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
   
+  <!-- P3 Menu Navigation -->
   <div id="p3-menu-container"></div>
   
+  <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-fusion-bg/80 backdrop-blur-xl border-b border-p5-red-dim/30" role="banner" style="height: var(--header-h);">
     <nav class="nav-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full" aria-label="Navegación principal" style="height: var(--header-h);">
       <a href="#hero" class="logo flex items-center gap-2" aria-label="Ir al inicio">
@@ -67,6 +70,7 @@ const projects = await getCollection('projects');
     </nav>
   </header>
   
+  <!-- Nav Menu (Desktop) -->
   <nav class="nav-menu hidden md:block fixed top-0 right-0 bottom-0 z-50 w-80 bg-fusion-bg/98 backdrop-blur-xl border-l border-p5-red-dim transform translate-x-full transition-transform duration-500 ease-out md:translate-x-0 md:static md:h-auto md:w-auto md:bg-transparent md:border-none md:flex md:items-center md:justify-end" id="nav-menu" aria-label="Menú de secciones" style="top: var(--header-h);">
     <ul class="nav-links flex flex-col md:flex-row md:items-center gap-1 md:gap-4 px-6 py-8 md:px-0 md:py-0">
       <li><a href="#hero" class="nav-link">Inicio</a></li>
@@ -86,6 +90,7 @@ const projects = await getCollection('projects');
     <About profile={profile} />
     <Skills skills={skills} />
     
+    <!-- Projects Section with Disc Carousel -->
     <section id="projects" class="py-20 md:py-32 px-4 sm:px-6 lg:px-8" aria-labelledby="projects-title" style="scroll-margin-top: var(--header-h);">
       <div class="max-w-7xl mx-auto">
         <h2 id="projects-title" class="section-title text-center">
@@ -111,7 +116,7 @@ const projects = await getCollection('projects');
       </p>
     </div>
   </footer>
-  
+
+  <!-- P3 Menu Container -->
   <div id="p3-menu-container"></div>
 </body>
-</html>

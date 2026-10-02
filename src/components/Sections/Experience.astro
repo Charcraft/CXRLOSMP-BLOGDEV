@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+const experiences = await getCollection('experience');
+---
+
+<section id="experience" class="py-20 md:py-32 px-4 sm:px-6 lg:px-8" aria-labelledby="exp-title" style="scroll-margin-top: var(--header-h);">
+  <div class="max-w-7xl mx-auto">
+    <h2 id="exp-title" class="section-title text-center">
+      Experiencia <span>& Eventos</span>
+    </h2>
+    
+    <div class="timeline relative">
+      <div class="timeline-line absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-p5-red to-p3-blue"></div>
+      
+      {experiences.map((exp, index) => `
+        <article class="timeline-item relative mb-16 {index % 2 === 0 ? 'md:text-right md:pr-16' : 'md:pl-16 md:ml-auto md:w-1/2'}">
+          <div class="timeline-marker absolute top-4 {index % 2 === 0 ? 'right-[-12px] md:right-[-12px]' : 'left-[-12px] md:left-[-12px]'} w-4 h-4 rounded-full bg-fusion-bg border-3 border-fusion-highlight shadow-[0_0_20px_rgba(242,232,82,0.5)] z-10"></div>
+          
+          <div class="timeline-content card-p5 p-6 relative">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="badge-p5 text-xs">{exp.data.type === 'certification' ? '📜 Certificación' : exp.data.type === 'work' ? '💼 Experiencia' : '🏆 Evento'}</span>
+              <span class="font-display text-xs text-fusion-highlight">{exp.data.period}</span>
+            </div>
+            <h3 class="font-display text-lg md:text-xl text-fusion-text-primary mb-2">{exp.data.role}</h3>
+            <p class="text-fusion-text-secondary font-medium mb-1">{exp.data.company}</p>
+            <p class="text-fusion-text-muted leading-relaxed">{exp.data.description}</p>
+          </div>
+        </article>
+      `)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .timeline {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+</style>
+
+<script>
+  // Scroll reveal for timeline items
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-slide-up');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('#experience .timeline-item').forEach(item => {
+    observer.observe(item);
+  });
+</script>
